@@ -6,13 +6,10 @@ import lombok.Builder
 import lombok.Data
 import java.util.Date
 
-@AllArgsConstructor
-@Builder
-@Data
-class PokemonTrainer {
-    private var id: String? = null
-    private var gender: String? = null
-    private var birthdate: Date? = null
-    private var gameVersion: GameVersion? = null
-    private var pokemons: List<Pokemon>? = null
-}
+class PokemonTrainer(
+    var id: Long? = null,
+    var gender: String? = null,
+    var birthDate: Date? = null,
+    var gameVersion: GameVersion? = null,
+    var pokemons: List<Pokemon>? = null,
+)

@@ -4,12 +4,10 @@ import lombok.AllArgsConstructor
 import lombok.Builder
 import lombok.Data
 
-@AllArgsConstructor
-@Builder
-@Data
-class Pokemon {
-    private var name: String? = null
-    private var type: String? = null
-    private var pokedexId: Int? = null
-    private var baseExperience: Int? = null
-}
+class Pokemon(
+    val id: Long? = null,
+    var name: String? = null,
+    var type: String? = null,
+    var pokedexId: Int? = null,
+    var baseExperience: Int? = null,
+)
