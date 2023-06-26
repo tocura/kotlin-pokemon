@@ -18,9 +18,5 @@ enum class GameVersion {
     HEARTGOLD,
     SOULSILVER,
     BLACK,
-    WHITE;
-
-    override fun toString(): String {
-        return super.toString().lowercase()
-    }
+    WHITE
 }

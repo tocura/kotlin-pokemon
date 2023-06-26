@@ -1,6 +1,7 @@
 package com.tocura.study.kotlin.adapter.database.entity
 
 import com.tocura.study.kotlin.core.enums.GameVersion
+import com.tocura.study.kotlin.core.enums.Gender
 import com.tocura.study.kotlin.core.model.Pokemon
 import com.tocura.study.kotlin.core.model.PokemonTrainer
 import de.huxhorn.sulky.ulid.ULID
@@ -29,9 +30,9 @@ class PokemonTrainerEntity() {
     @JoinColumn(name = "trainer_id")
     internal var pokemons: List<PokemonEntity>? = null
 
-    constructor(id: String, gender: String, birthDate: String, gameVersion: GameVersion, pokemons: List<PokemonEntity>): this() {
+    constructor(id: String, gender: Gender, birthDate: String, gameVersion: GameVersion, pokemons: List<PokemonEntity>): this() {
         this.id = id
-        this.gender = gender
+        this.gender = gender.toString()
         this.birthDate = LocalDate.parse(birthDate)
         this.gameVersion = gameVersion.toString()
         this.pokemons = pokemons
@@ -52,7 +53,7 @@ class PokemonTrainerEntity() {
 
         return PokemonTrainer(
             this.id,
-            this.gender,
+            Gender.valueOf(this.gender),
             this.birthDate.toString(),
             GameVersion.valueOf(this.gameVersion),
             pokemons.toList()
