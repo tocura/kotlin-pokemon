@@ -7,9 +7,9 @@ import lombok.Data
 import java.util.Date
 
 class PokemonTrainer(
-    var id: Long? = null,
-    var gender: String? = null,
-    var birthDate: Date? = null,
-    var gameVersion: GameVersion? = null,
-    var pokemons: List<Pokemon>? = null,
+    var id: String? = null,
+    var gender: String,
+    var birthDate: Date,
+    var gameVersion: GameVersion,
+    var pokemons: List<Pokemon>,
 )

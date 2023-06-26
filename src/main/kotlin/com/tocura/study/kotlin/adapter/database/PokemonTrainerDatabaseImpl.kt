@@ -1,6 +1,6 @@
 package com.tocura.study.kotlin.adapter.database
 
-import com.tocura.study.kotlin.adapter.database.entity.Pokemon
+import com.tocura.study.kotlin.adapter.database.entity.PokemonEntity
 import com.tocura.study.kotlin.core.model.PokemonTrainer
 import com.tocura.study.kotlin.core.ports.Database
 import org.springframework.stereotype.Repository
@@ -11,11 +11,11 @@ class PokemonTrainerDatabaseImpl(
 ) : Database {
 
     override fun save(trainer: PokemonTrainer): PokemonTrainer {
-        var pokemons = mutableListOf<Pokemon>()
+        var pokemonEntities = mutableListOf<PokemonEntity>()
 
         for (pokemon in trainer.pokemons!!) {
-            pokemons.add(
-                Pokemon(
+            pokemonEntities.add(
+                PokemonEntity(
                 pokemon.id,
                 pokemon.name!!,
                 pokemon.type!!,
@@ -25,12 +25,12 @@ class PokemonTrainerDatabaseImpl(
             )
         }
 
-        var trainerEntity = com.tocura.study.kotlin.adapter.database.entity.PokemonTrainer(
+        var trainerEntity = com.tocura.study.kotlin.adapter.database.entity.PokemonTrainerEntity(
             trainer.id,
             trainer.gender!!,
             trainer.birthDate!!,
             trainer.gameVersion.toString(),
-            pokemons
+            pokemonEntities
         )
 
         this.pokemonTrainerRepo.save(trainerEntity)
