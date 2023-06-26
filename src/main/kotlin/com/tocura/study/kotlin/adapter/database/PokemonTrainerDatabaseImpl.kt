@@ -1,6 +1,7 @@
 package com.tocura.study.kotlin.adapter.database
 
 import com.tocura.study.kotlin.adapter.database.entity.PokemonEntity
+import com.tocura.study.kotlin.adapter.database.entity.PokemonTrainerEntity
 import com.tocura.study.kotlin.core.model.PokemonTrainer
 import com.tocura.study.kotlin.core.ports.Database
 import org.springframework.stereotype.Repository
@@ -11,30 +12,8 @@ class PokemonTrainerDatabaseImpl(
 ) : Database {
 
     override fun save(trainer: PokemonTrainer): PokemonTrainer {
-        var pokemonEntities = mutableListOf<PokemonEntity>()
-
-        for (pokemon in trainer.pokemons!!) {
-            pokemonEntities.add(
-                PokemonEntity(
-                pokemon.id,
-                pokemon.name!!,
-                pokemon.type!!,
-                pokemon.pokedexId!!,
-                pokemon.baseExperience!!
-            )
-            )
-        }
-
-        var trainerEntity = com.tocura.study.kotlin.adapter.database.entity.PokemonTrainerEntity(
-            trainer.id,
-            trainer.gender!!,
-            trainer.birthDate!!,
-            trainer.gameVersion.toString(),
-            pokemonEntities
-        )
-
-        this.pokemonTrainerRepo.save(trainerEntity)
-
+        val pokemonTrainerEntity = PokemonTrainerEntity()
+        this.pokemonTrainerRepo.save(pokemonTrainerEntity.toEntity(trainer))
         return trainer
     }
 

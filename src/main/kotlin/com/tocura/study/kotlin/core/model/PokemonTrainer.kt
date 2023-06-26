@@ -9,7 +9,7 @@ import java.util.Date
 class PokemonTrainer(
     var id: String? = null,
     var gender: String,
-    var birthDate: Date,
+    var birthDate: String,
     var gameVersion: GameVersion,
     var pokemons: List<Pokemon>,
 )

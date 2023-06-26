@@ -6,6 +6,7 @@ import com.tocura.study.kotlin.core.model.PokemonTrainer
 import de.huxhorn.sulky.ulid.ULID
 import jakarta.persistence.*
 import org.springframework.beans.factory.annotation.Autowired
+import java.time.LocalDate
 import java.util.Date
 
 @Entity
@@ -17,7 +18,7 @@ class PokemonTrainerEntity() {
 
     internal var gender: String = ""
 
-    internal var birthDate: Date = Date()
+    internal var birthDate: LocalDate = LocalDate.now()
 
     internal var gameVersion: String = ""
 
@@ -26,22 +27,20 @@ class PokemonTrainerEntity() {
         orphanRemoval = true
     )
     @JoinColumn(name = "trainer_id")
-    internal var pokemons: List<PokemonEntity> = emptyList()
+    internal var pokemons: List<PokemonEntity>? = null
 
-    @Autowired
-    private lateinit var ulid: ULID
-
-    constructor(id: String, gender: String, birthDate: Date, gameVersion: GameVersion, pokemons: List<PokemonEntity>): this() {
+    constructor(id: String, gender: String, birthDate: String, gameVersion: GameVersion, pokemons: List<PokemonEntity>): this() {
         this.id = id
         this.gender = gender
-        this.birthDate = birthDate
+        this.birthDate = LocalDate.parse(birthDate)
         this.gameVersion = gameVersion.toString()
         this.pokemons = pokemons
     }
+
     fun toDomain(): PokemonTrainer {
         val pokemons = mutableListOf<Pokemon>()
 
-        for (pokemon in this.pokemons) {
+        for (pokemon in this.pokemons!!) {
             pokemons.add(Pokemon(
                 pokemon.id,
                 pokemon.name,
@@ -54,14 +53,13 @@ class PokemonTrainerEntity() {
         return PokemonTrainer(
             this.id,
             this.gender,
-            this.birthDate,
+            this.birthDate.toString(),
             GameVersion.valueOf(this.gameVersion),
-            pokemons
+            pokemons.toList()
         )
     }
 
     fun toEntity(trainer: PokemonTrainer): PokemonTrainerEntity {
-        val id = this.ulid.nextULID()
         val pokemonEntities = mutableListOf<PokemonEntity>()
 
         for (pokemon in trainer.pokemons) {
@@ -70,11 +68,11 @@ class PokemonTrainerEntity() {
         }
 
         return PokemonTrainerEntity(
-            id,
+            trainer.id!!,
             trainer.gender,
             trainer.birthDate,
             trainer.gameVersion,
-            pokemonEntities
+            pokemonEntities.toList()
         )
     }
 }

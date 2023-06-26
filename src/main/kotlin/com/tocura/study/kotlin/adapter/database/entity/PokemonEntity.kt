@@ -22,9 +22,6 @@ class PokemonEntity() {
     @Column(name = "base_experience")
     internal var baseExperience: Int = 0
 
-    @Autowired
-    private lateinit var ulid: ULID
-
     constructor(id: String, name: String, type: String, pokedexId: Int, baseExperience: Int) : this() {
         this.id = id
         this.name = name
@@ -38,9 +35,8 @@ class PokemonEntity() {
     }
 
     fun toEntity(pokemon: Pokemon): PokemonEntity {
-        val id = this.ulid.nextULID()
         return PokemonEntity(
-            id,
+            pokemon.id!!,
             pokemon.name,
             pokemon.type,
             pokemon.pokedexId,
