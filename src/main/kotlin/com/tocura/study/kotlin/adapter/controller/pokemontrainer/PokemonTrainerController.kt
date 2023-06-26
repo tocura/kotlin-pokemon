@@ -1,4 +1,4 @@
-package com.tocura.study.kotlin.adapter.controller
+package com.tocura.study.kotlin.adapter.controller.pokemontrainer
 
 import com.tocura.study.kotlin.core.enums.GameVersion
 import com.tocura.study.kotlin.core.model.Pokemon
