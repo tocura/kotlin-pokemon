@@ -8,7 +8,5 @@ import org.springframework.context.annotation.Configuration
 class AppConfig {
 
     @Bean
-    fun ulid(): ULID {
-        return ULID()
-    }
+    fun ulid(): ULID = ULID()
 }

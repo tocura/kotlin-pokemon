@@ -1,6 +1,5 @@
 package com.tocura.study.kotlin.adapter.database
 
-import com.tocura.study.kotlin.adapter.database.entity.PokemonEntity
 import com.tocura.study.kotlin.adapter.database.entity.PokemonTrainerEntity
 import com.tocura.study.kotlin.core.model.PokemonTrainer
 import com.tocura.study.kotlin.core.ports.Database
@@ -14,11 +13,11 @@ class PokemonTrainerDatabaseImpl(
 
     override fun save(trainer: PokemonTrainer): PokemonTrainer {
         val pokemonTrainerEntity = PokemonTrainerEntity()
-        this.pokemonTrainerRepo.save(pokemonTrainerEntity.toEntity(trainer))
+        this.pokemonTrainerRepo.save(pokemonTrainerEntity.fromDomain(trainer))
         return trainer
     }
 
-    override fun findById(id: Long): PokemonTrainer? {
+    override fun findById(id: String): PokemonTrainer? {
         var trainerEntity = this.pokemonTrainerRepo.findById(id)
 
         if (trainerEntity.isPresent) {

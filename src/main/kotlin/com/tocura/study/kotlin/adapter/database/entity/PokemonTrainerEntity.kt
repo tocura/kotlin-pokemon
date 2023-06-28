@@ -4,12 +4,8 @@ import com.tocura.study.kotlin.core.enums.GameVersion
 import com.tocura.study.kotlin.core.enums.Gender
 import com.tocura.study.kotlin.core.model.Pokemon
 import com.tocura.study.kotlin.core.model.PokemonTrainer
-import de.huxhorn.sulky.ulid.ULID
 import jakarta.persistence.*
-import org.springframework.beans.factory.annotation.Autowired
 import java.time.LocalDate
-import java.util.Date
-
 @Entity
 @Table(name = "trainer")
 class PokemonTrainerEntity() {
@@ -30,25 +26,20 @@ class PokemonTrainerEntity() {
     @JoinColumn(name = "trainer_id")
     internal var pokemons: List<PokemonEntity>? = null
 
-    constructor(id: String, gender: Gender, birthDate: String, gameVersion: GameVersion, pokemons: List<PokemonEntity>): this() {
+    constructor(id: String, gender: String, birthDate: LocalDate,
+                gameVersion: String, pokemons: List<PokemonEntity>) : this() {
         this.id = id
-        this.gender = gender.toString()
-        this.birthDate = LocalDate.parse(birthDate)
-        this.gameVersion = gameVersion.toString()
+        this.gender = gender
+        this.birthDate = birthDate
+        this.gameVersion = gameVersion
         this.pokemons = pokemons
     }
 
     fun toDomain(): PokemonTrainer {
         val pokemons = mutableListOf<Pokemon>()
 
-        for (pokemon in this.pokemons!!) {
-            pokemons.add(Pokemon(
-                pokemon.id,
-                pokemon.name,
-                pokemon.type,
-                pokemon.pokedexId,
-                pokemon.baseExperience
-            ))
+        for (pokemonEntity in this.pokemons!!) {
+            pokemons.add(pokemonEntity.toDomain())
         }
 
         return PokemonTrainer(
@@ -60,19 +51,19 @@ class PokemonTrainerEntity() {
         )
     }
 
-    fun toEntity(trainer: PokemonTrainer): PokemonTrainerEntity {
+    fun fromDomain(trainer: PokemonTrainer): PokemonTrainerEntity {
         val pokemonEntities = mutableListOf<PokemonEntity>()
 
         for (pokemon in trainer.pokemons) {
             val pokemonEntity = PokemonEntity()
-            pokemonEntities.add(pokemonEntity.toEntity(pokemon))
+            pokemonEntities.add(pokemonEntity.fromDomain(pokemon))
         }
 
         return PokemonTrainerEntity(
             trainer.id!!,
-            trainer.gender,
-            trainer.birthDate,
-            trainer.gameVersion,
+            trainer.gender.toString(),
+            LocalDate.parse(trainer.birthDate),
+            trainer.gameVersion.toString(),
             pokemonEntities.toList()
         )
     }
