@@ -15,7 +15,7 @@ class PokemonTrainerEntity() {
 
     internal var gender: String = ""
 
-    internal var birthDate: LocalDate = LocalDate.now()
+    internal var birthdate: LocalDate = LocalDate.now()
 
     internal var gameVersion: String = ""
 
@@ -30,7 +30,7 @@ class PokemonTrainerEntity() {
                 gameVersion: String, pokemons: List<PokemonEntity>) : this() {
         this.id = id
         this.gender = gender
-        this.birthDate = birthDate
+        this.birthdate = birthDate
         this.gameVersion = gameVersion
         this.pokemons = pokemons
     }
@@ -45,7 +45,7 @@ class PokemonTrainerEntity() {
         return PokemonTrainer(
             this.id,
             Gender.valueOf(this.gender),
-            this.birthDate.toString(),
+            this.birthdate.toString(),
             GameVersion.valueOf(this.gameVersion),
             pokemons.toList()
         )
@@ -62,7 +62,7 @@ class PokemonTrainerEntity() {
         return PokemonTrainerEntity(
             trainer.id!!,
             trainer.gender.toString(),
-            LocalDate.parse(trainer.birthDate),
+            LocalDate.parse(trainer.birthdate),
             trainer.gameVersion.toString(),
             pokemonEntities.toList()
         )
