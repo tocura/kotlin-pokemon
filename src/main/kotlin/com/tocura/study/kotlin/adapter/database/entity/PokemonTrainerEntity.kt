@@ -5,6 +5,7 @@ import com.tocura.study.kotlin.core.enums.Gender
 import com.tocura.study.kotlin.core.model.Pokemon
 import com.tocura.study.kotlin.core.model.PokemonTrainer
 import jakarta.persistence.*
+import org.jetbrains.annotations.NotNull
 import java.time.LocalDate
 @Entity
 @Table(name = "trainer")
@@ -13,17 +14,20 @@ class PokemonTrainerEntity() {
     @Id
     internal var id: String = ""
 
+    @Column(nullable = false)
     internal var gender: String = ""
 
+    @Column(nullable = false)
     internal var birthdate: LocalDate = LocalDate.now()
 
+    @Column(name = "game_version", nullable = false)
     internal var gameVersion: String = ""
 
     @OneToMany(
         cascade = [CascadeType.ALL],
         orphanRemoval = true
     )
-    @JoinColumn(name = "trainer_id")
+    @JoinColumn(name = "trainer_id", nullable = false)
     internal var pokemons: List<PokemonEntity>? = null
 
     constructor(id: String, gender: String, birthDate: LocalDate,

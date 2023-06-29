@@ -10,14 +10,16 @@ class PokemonEntity() {
     @Id
     internal var id: String = ""
 
+    @Column(nullable = false)
     internal var name: String = ""
 
+    @Column(nullable = false)
     internal var type: String = ""
 
-    @Column(name = "pokedex_id")
+    @Column(name = "pokedex_id", nullable = false)
     internal var pokedexId: Int = 0
 
-    @Column(name = "base_experience")
+    @Column(name = "base_experience", nullable = false)
     internal var baseExperience: Int = 0
 
     constructor(id: String, name: String, type: String, pokedexId: Int, baseExperiece: Int) : this() {

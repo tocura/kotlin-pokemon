@@ -1,7 +1,10 @@
 package com.tocura.study.kotlin.adapter.controller.pokemontrainer
 
 import com.tocura.study.kotlin.core.enums.GameVersion
-import com.tocura.study.kotlin.core.ports.PokeApiClient
+import com.tocura.study.kotlin.core.enums.Gender
+import com.tocura.study.kotlin.core.model.Pokemon
+import com.tocura.study.kotlin.core.model.PokemonTrainer
+import com.tocura.study.kotlin.core.ports.Database
 import com.tocura.study.kotlin.core.ports.PokemonTrainerService
 import de.huxhorn.sulky.ulid.ULID
 import io.github.oshai.kotlinlogging.KotlinLogging
