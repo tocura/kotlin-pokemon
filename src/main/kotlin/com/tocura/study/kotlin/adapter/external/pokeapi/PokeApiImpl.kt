@@ -3,7 +3,7 @@ package com.tocura.study.kotlin.adapter.external.pokeapi
 import com.tocura.study.kotlin.adapter.external.pokeapi.resource.PokeAPIResponse
 import com.tocura.study.kotlin.core.enums.GameVersion
 import com.tocura.study.kotlin.core.model.PokeAPI
-import com.tocura.study.kotlin.core.ports.PokeAPIClient
+import com.tocura.study.kotlin.core.ports.PokeApiClient
 import com.tocura.study.kotlin.exceptions.InternalServerErrorException
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
@@ -12,7 +12,7 @@ import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.WebClientResponseException
 
 @Component
-class PokeAPIImpl(val restClient: WebClient.Builder) : PokeAPIClient {
+class PokeApiImpl(val restClient: WebClient.Builder) : PokeApiClient {
     private val log = KotlinLogging.logger("adapter.external.pokeapi")
 
     @Value("\${pokeapi.host}")

@@ -1,11 +1,7 @@
 package com.tocura.study.kotlin.adapter.controller.pokemontrainer
 
 import com.tocura.study.kotlin.core.enums.GameVersion
-import com.tocura.study.kotlin.core.enums.Gender
-import com.tocura.study.kotlin.core.model.Pokemon
-import com.tocura.study.kotlin.core.model.PokemonTrainer
-import com.tocura.study.kotlin.core.ports.Database
-import com.tocura.study.kotlin.core.ports.PokeAPIClient
+import com.tocura.study.kotlin.core.ports.PokeApiClient
 import de.huxhorn.sulky.ulid.ULID
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.http.HttpStatus
@@ -16,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/pokemon-api/trainer")
-class PokemonTrainerController(val pokeApiClient: PokeAPIClient, val ulid: ULID) {
+class PokemonTrainerController(val pokeApiClient: PokeApiClient, val ulid: ULID) {
     private val log = KotlinLogging.logger{}
 
     @PostMapping
