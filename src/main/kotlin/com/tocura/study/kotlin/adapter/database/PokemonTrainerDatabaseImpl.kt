@@ -17,7 +17,7 @@ class PokemonTrainerDatabaseImpl(
         return trainer
     }
 
-    override fun findById(id: String): PokemonTrainer? {
+    override fun findById(id: String): PokemonTrainer {
         var trainerEntity = this.pokemonTrainerRepo.findById(id)
 
         if (trainerEntity.isPresent) {
