@@ -1,5 +1,7 @@
 package com.tocura.study.kotlin.adapter.controller.pokemontrainer
 
+import com.tocura.study.kotlin.adapter.controller.pokemontrainer.presenter.PokemonTrainerResponse
+import com.tocura.study.kotlin.adapter.controller.pokemontrainer.request.PatchPokemonsRequest
 import com.tocura.study.kotlin.adapter.controller.pokemontrainer.request.PokemonTrainerRequest
 import com.tocura.study.kotlin.core.ports.PokemonTrainerService
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -16,11 +18,19 @@ class PokemonTrainerController(val pokemonTrainerSrv: PokemonTrainerService) {
 
     @PostMapping
     fun create(@Valid @RequestBody trainer: PokemonTrainerRequest): ResponseEntity<Any> {
-        return ResponseEntity(this.pokemonTrainerSrv.create(trainer.toDomain()), HttpStatus.CREATED)
+        val trainer = this.pokemonTrainerSrv.create(trainer.toDomain())
+        return ResponseEntity(PokemonTrainerResponse().fromDomain(trainer), HttpStatus.CREATED)
     }
 
     @GetMapping("/{trainer_id}")
     fun findById(@PathVariable("trainer_id") id: String): ResponseEntity<Any> {
-        return ResponseEntity(this.pokemonTrainerSrv.findById(id), HttpStatus.OK)
+        val trainer = this.pokemonTrainerSrv.findById(id)
+        return ResponseEntity(PokemonTrainerResponse().fromDomain(trainer), HttpStatus.OK)
+    }
+
+    @PatchMapping("/{trainer_id}/pokemons")
+    fun patchPokemons(@Valid @RequestBody pokemons: PatchPokemonsRequest, @PathVariable("trainer_id") id: String): ResponseEntity<Any> {
+        val trainerUpdated = this.pokemonTrainerSrv.patchPokemons(id, pokemons.pokemons)
+        return ResponseEntity(PokemonTrainerResponse().fromDomain(trainerUpdated), HttpStatus.OK)
     }
 }

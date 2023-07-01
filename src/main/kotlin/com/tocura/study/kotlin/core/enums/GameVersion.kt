@@ -21,9 +21,4 @@ enum class GameVersion {
     SOULSILVER,
     BLACK,
     WHITE;
-
-    @JsonCreator
-    fun getGameVersion(value: String): GameVersion {
-        return GameVersion.valueOf(value)
-    }
 }

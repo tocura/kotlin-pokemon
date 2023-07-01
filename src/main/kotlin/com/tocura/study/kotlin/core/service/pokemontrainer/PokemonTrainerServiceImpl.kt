@@ -1,5 +1,6 @@
 package com.tocura.study.kotlin.core.service.pokemontrainer
 
+import com.tocura.study.kotlin.core.model.Pokemon
 import com.tocura.study.kotlin.core.model.PokemonTrainer
 import com.tocura.study.kotlin.core.ports.Database
 import com.tocura.study.kotlin.core.ports.PokeApiClient
@@ -36,7 +37,28 @@ class PokemonTrainerServiceImpl(
     }
 
     override fun patchPokemons(id: String, pokemons: List<String>): PokemonTrainer {
-        TODO("Not yet implemented")
+        var trainer = this.database.findById(id)
+
+        val pokemonsToUpdate = mutableListOf<Pokemon>()
+
+        for (pokemon in pokemons) {
+            pokemonsToUpdate.add(
+                Pokemon(
+                    name = pokemon,
+                    type = "",
+                    pokedexId = 0,
+                    baseExperience = 0
+                )
+            )
+        }
+
+        trainer.pokemons = pokemonsToUpdate
+
+        runBlocking {
+            asyncEnrichPokemonInfo(trainer)
+        }
+
+        return this.database.save(trainer)
     }
 
     suspend fun asyncEnrichPokemonInfo(trainer: PokemonTrainer) = coroutineScope {
