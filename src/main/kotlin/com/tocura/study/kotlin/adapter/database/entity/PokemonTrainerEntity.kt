@@ -5,7 +5,6 @@ import com.tocura.study.kotlin.core.enums.Gender
 import com.tocura.study.kotlin.core.model.Pokemon
 import com.tocura.study.kotlin.core.model.PokemonTrainer
 import jakarta.persistence.*
-import org.jetbrains.annotations.NotNull
 import java.time.LocalDate
 @Entity
 @Table(name = "trainer")

@@ -34,8 +34,6 @@ class PokeApiImpl(val restClient: WebClient) : PokeApiClient {
                 .retrieve()
                 .bodyToMono(PokeAPIResponse::class.java)
 
-//            log.info {"**** pokeapi response ${response!!.types[0].type}"}
-
             return response.block()!!.toDomain(gameVersion)
         } catch (e: WebClientResponseException) {
             log.error(e) {"error to integrate with pokeapi"}

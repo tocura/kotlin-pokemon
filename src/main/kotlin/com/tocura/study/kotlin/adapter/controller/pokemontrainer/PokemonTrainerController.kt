@@ -8,7 +8,6 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -17,8 +16,8 @@ class PokemonTrainerController(val pokemonTrainerSrv: PokemonTrainerService) {
     private val log = KotlinLogging.logger{}
 
     @PostMapping
-    fun create(@Valid @RequestBody trainer: PokemonTrainerRequest): ResponseEntity<Any> {
-        val trainer = this.pokemonTrainerSrv.create(trainer.toDomain())
+    fun create(@Valid @RequestBody trainerRequest: PokemonTrainerRequest): ResponseEntity<Any> {
+        val trainer = this.pokemonTrainerSrv.create(trainerRequest.toDomain())
         return ResponseEntity(PokemonTrainerResponse().fromDomain(trainer), HttpStatus.CREATED)
     }
 

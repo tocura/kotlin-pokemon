@@ -1,7 +1,6 @@
 package com.tocura.study.kotlin.adapter.controller.pokemontrainer.presenter
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.tocura.study.kotlin.core.enums.GameVersion
 import com.tocura.study.kotlin.core.model.PokemonTrainer
 
 class PokemonTrainerResponse() {
