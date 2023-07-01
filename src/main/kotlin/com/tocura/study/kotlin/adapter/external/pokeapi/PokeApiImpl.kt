@@ -10,9 +10,10 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.WebClientResponseException
+import java.net.URI
 
 @Component
-class PokeApiImpl(val restClient: WebClient.Builder) : PokeApiClient {
+class PokeApiImpl(val restClient: WebClient) : PokeApiClient {
     private val log = KotlinLogging.logger("adapter.external.pokeapi")
 
     @Value("\${pokeapi.host}")
@@ -21,23 +22,19 @@ class PokeApiImpl(val restClient: WebClient.Builder) : PokeApiClient {
     @Value("\${pokeapi.path.get-pokemon}")
     private val getPokemonEndpoint: String = ""
 
-    override fun GetByName(name: String, gameVersion: GameVersion): PokeAPI {
+    override fun getByName(name: String, gameVersion: GameVersion): PokeAPI {
         val endpoint = this.getPokemonEndpoint.replace("{pokemon_name}", name, true)
         val baseUrl = this.host + endpoint
 
-        val client = this.restClient
-            .baseUrl(baseUrl)
-            .build()
-
         try {
-            val response = client.get()
+            val response = this.restClient.get()
+                .uri(URI(baseUrl))
                 .retrieve()
                 .bodyToMono(PokeAPIResponse::class.java)
-                .block()
 
 //            log.info {"**** pokeapi response ${response!!.types[0].type}"}
 
-            return response!!.toDomain(gameVersion)
+            return response.block()!!.toDomain(gameVersion)
         } catch (e: WebClientResponseException) {
             log.error(e) {"error to integrate with pokeapi"}
             throw InternalServerErrorException("error to integrate with pokeapi")

@@ -17,6 +17,33 @@ import org.springframework.web.bind.annotation.*
 class PokemonTrainerController(val pokemonTrainerSrv: PokemonTrainerService) {
     private val log = KotlinLogging.logger{}
 
+    @PostMapping
+    fun create(): ResponseEntity<Any> {
+        val pokemons = listOf<Pokemon>(
+            Pokemon(
+                name = "pikachu",
+                type = "",
+                pokedexId = 0,
+                baseExperience = 0
+            ),
+            Pokemon(
+                name = "charizard",
+                type = "",
+                pokedexId = 0,
+                baseExperience = 0
+            )
+        )
+
+        val trainer = PokemonTrainer(
+            gender = Gender.MALE,
+            birthdate = "2000-11-02",
+            gameVersion = GameVersion.FIRERED,
+            pokemons = pokemons
+        )
+
+        return ResponseEntity(this.pokemonTrainerSrv.create(trainer), HttpStatus.CREATED)
+    }
+
     @GetMapping("/{trainer_id}")
     fun findById(@PathVariable("trainer_id") id: String): ResponseEntity<Any> {
         return ResponseEntity(this.pokemonTrainerSrv.findById(id), HttpStatus.OK)

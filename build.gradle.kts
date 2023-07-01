@@ -26,6 +26,7 @@ dependencies {
 	implementation("de.huxhorn.sulky:de.huxhorn.sulky.ulid:8.3.0")
 	implementation("io.github.oshai:kotlin-logging-jvm:4.0.0")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	compileOnly("org.projectlombok:lombok")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")

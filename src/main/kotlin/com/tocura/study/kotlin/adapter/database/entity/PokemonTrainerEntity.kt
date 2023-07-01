@@ -15,6 +15,9 @@ class PokemonTrainerEntity() {
     internal var id: String = ""
 
     @Column(nullable = false)
+    internal var name: String = ""
+
+    @Column(nullable = false)
     internal var gender: String = ""
 
     @Column(nullable = false)
@@ -30,9 +33,10 @@ class PokemonTrainerEntity() {
     @JoinColumn(name = "trainer_id", nullable = false)
     internal var pokemons: List<PokemonEntity>? = null
 
-    constructor(id: String, gender: String, birthDate: LocalDate,
+    constructor(id: String, name: String, gender: String, birthDate: LocalDate,
                 gameVersion: String, pokemons: List<PokemonEntity>) : this() {
         this.id = id
+        this.name = name
         this.gender = gender
         this.birthdate = birthDate
         this.gameVersion = gameVersion
@@ -48,6 +52,7 @@ class PokemonTrainerEntity() {
 
         return PokemonTrainer(
             this.id,
+            this.name,
             Gender.valueOf(this.gender),
             this.birthdate.toString(),
             GameVersion.valueOf(this.gameVersion),
@@ -65,6 +70,7 @@ class PokemonTrainerEntity() {
 
         return PokemonTrainerEntity(
             trainer.id!!,
+            trainer.name,
             trainer.gender.toString(),
             LocalDate.parse(trainer.birthdate),
             trainer.gameVersion.toString(),

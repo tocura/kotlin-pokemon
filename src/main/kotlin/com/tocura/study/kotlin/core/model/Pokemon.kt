@@ -5,7 +5,7 @@ import lombok.Builder
 import lombok.Data
 
 class Pokemon(
-    val id: String? = null,
+    var id: String? = null,
     var name: String,
     var type: String,
     var pokedexId: Int,
