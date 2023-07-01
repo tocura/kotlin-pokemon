@@ -5,8 +5,10 @@ import com.tocura.study.kotlin.core.enums.GameVersion
 import com.tocura.study.kotlin.core.model.PokeAPI
 import com.tocura.study.kotlin.core.ports.PokeApiClient
 import com.tocura.study.kotlin.exceptions.InternalServerErrorException
+import com.tocura.study.kotlin.exceptions.PokeApiNotFoundException
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.WebClientResponseException
@@ -37,7 +39,10 @@ class PokeApiImpl(val restClient: WebClient) : PokeApiClient {
             return response.block()!!.toDomain(gameVersion)
         } catch (e: WebClientResponseException) {
             log.error(e) {"error to integrate with pokeapi"}
-            throw InternalServerErrorException("error to integrate with pokeapi")
+            when(e.statusCode) {
+                HttpStatus.NOT_FOUND -> throw PokeApiNotFoundException("$name not found")
+                else -> throw InternalServerErrorException("error to integrate with pokeapi")
+            }
         }
     }
 }

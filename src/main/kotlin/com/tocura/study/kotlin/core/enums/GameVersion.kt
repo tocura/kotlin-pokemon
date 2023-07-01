@@ -1,5 +1,7 @@
 package com.tocura.study.kotlin.core.enums
 
+import com.fasterxml.jackson.annotation.JsonCreator
+
 enum class GameVersion {
     RED,
     BLUE,
@@ -18,5 +20,10 @@ enum class GameVersion {
     HEARTGOLD,
     SOULSILVER,
     BLACK,
-    WHITE
+    WHITE;
+
+    @JsonCreator
+    fun getGameVersion(value: String): GameVersion {
+        return GameVersion.valueOf(value)
+    }
 }

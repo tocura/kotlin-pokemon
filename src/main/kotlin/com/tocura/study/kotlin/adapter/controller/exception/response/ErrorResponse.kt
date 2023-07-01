@@ -5,3 +5,7 @@ class ErrorResponse(
     var message: String,
     var detail: String,
 )
+
+class ErrorsResponse(
+    var errors: List<ErrorResponse>
+)

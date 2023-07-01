@@ -4,6 +4,7 @@ import com.tocura.study.kotlin.core.model.PokemonTrainer
 import com.tocura.study.kotlin.core.ports.Database
 import com.tocura.study.kotlin.core.ports.PokeApiClient
 import com.tocura.study.kotlin.core.ports.PokemonTrainerService
+import com.tocura.study.kotlin.exceptions.PokeApiNotFoundException
 import de.huxhorn.sulky.ulid.ULID
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.*
@@ -49,14 +50,19 @@ class PokemonTrainerServiceImpl(
     }
 
     suspend fun getPokemonInfo(pokemonName: String, trainer: PokemonTrainer) {
-        val pokemonData = this.pokeApiClient.getByName(pokemonName, trainer.gameVersion)
+        try {
+            val pokemonData = this.pokeApiClient.getByName(pokemonName, trainer.gameVersion)
 
-        mutex.withLock {
-            val pokemon = trainer.pokemons.first{ it.name == pokemonName }
-            pokemon.id = this.ulid.nextULID()
-            pokemon.type = pokemonData.type
-            pokemon.pokedexId = pokemonData.pokedexId
-            pokemon.baseExperience = pokemonData.baseExperience
+            mutex.withLock {
+                val pokemon = trainer.pokemons.first{ it.name == pokemonName }
+                pokemon.id = this.ulid.nextULID()
+                pokemon.type = pokemonData.type
+                pokemon.pokedexId = pokemonData.pokedexId
+                pokemon.baseExperience = pokemonData.baseExperience
+            }
+        } catch (e: NoSuchElementException) {
+            log.error(e) {"pokemon $pokemonName does not exists in game version ${trainer.gameVersion}"}
+            throw PokeApiNotFoundException("pokemon $pokemonName does not exists in game version ${trainer.gameVersion}")
         }
     }
 }
