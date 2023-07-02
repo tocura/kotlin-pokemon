@@ -37,7 +37,7 @@ class PokemonTrainerDatabaseImplTest {
         }
 
         @Test
-        fun `save error`() {
+        fun `save throw PersistenceException`() {
             every { pokemonTrainerRepo.save(any()) } throws PersistenceException()
 
             shouldThrow<PersistenceException> {
@@ -63,7 +63,7 @@ class PokemonTrainerDatabaseImplTest {
         }
 
         @Test
-        fun `findById not found exception`() {
+        fun `findById throw TrainerNotFoundException`() {
             every { pokemonTrainerRepo.findById(any()) } throws TrainerNotFoundException()
 
             shouldThrow<TrainerNotFoundException> {
