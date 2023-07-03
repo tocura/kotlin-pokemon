@@ -26,7 +26,7 @@ class PokemonTrainerRequest(
     var birthdate: String,
 
     @field:NotNull(message = "game_version is mandatory")
-    @JsonProperty("game_version")
+    @field:JsonProperty("game_version")
     var gameVersion: GameVersion,
 
     @field:NotNull(message = "pokemons is mandatory")

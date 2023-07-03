@@ -8,7 +8,7 @@ import com.tocura.study.kotlin.core.model.PokemonTrainer
 
 class DomainMocks() {
     fun pokemon(): Pokemon {
-        return Pokemon("1", "water", "blastoise", 9, 265)
+        return Pokemon("1", "blastoise", "water", 9, 265)
     }
 
     fun pokemonTrainer(): PokemonTrainer {

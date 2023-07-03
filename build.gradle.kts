@@ -37,6 +37,8 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.mockk:mockk:1.13.5")
 	testImplementation("io.kotest:kotest-assertions-core-jvm:5.6.2")
+	testImplementation("io.rest-assured:spring-mock-mvc:3.0.0")
+	testImplementation("com.ninja-squad:springmockk:4.0.2")
 }
 
 tasks.withType<KotlinCompile> {

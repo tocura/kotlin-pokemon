@@ -7,7 +7,7 @@ import java.time.LocalDate
 class EntityMocks() {
 
     fun pokemon(): PokemonEntity {
-        return PokemonEntity("1", "water", "blastoise", 9, 265)
+        return PokemonEntity("1", "blastoise", "water", 9, 265)
     }
 
     fun pokemonTrainer(): PokemonTrainerEntity {
