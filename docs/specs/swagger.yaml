@@ -1,0 +1,231 @@
+openapi: 3.0.1
+info:
+  title: Kotlin Pokemon API
+  description: Application to create a trainer pokemon.
+  version: 0.1.0
+servers:
+  - url: 'localhost:8080/pokemon-api'
+    description: Local
+tags:
+  - name: Trainer
+    description: APIs to create, get and update a pokemon trainer
+
+paths:
+    /trainer:
+        post:
+          tags:
+            - Trainer
+          summary: Endpoint to create a pokemon trainer
+          operationId: create_pokemon_trainer
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/request.pokemon_trainer'
+          responses:
+            '201':
+              $ref: '#/components/responses/response.pokemon_trainer_created'
+            '400':
+              $ref: '#/components/responses/response.errors'
+            '404':
+              $ref: '#/components/responses/response.error'
+            '500':
+              $ref: '#/components/responses/response.error'
+
+components:
+  schemas:
+    request.pokemon_trainer:
+      type: object
+      required:
+        - name
+        - gender
+        - birthdate
+        - game_version
+        - pokemons
+      properties:
+        name:
+          type: string
+          description: Name of the pokemon trainer
+          example: 'Ash Ketchum'
+        gender:
+          type: string
+          description: Gender of the pokemon trainer
+          enum:
+            - MALE
+            - FEMALE
+            - OTHERS
+          example: MALE
+        birthdate:
+          type: string
+          description: Birthdate of the pokemon trainer
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '1997-04-01'
+        game_version:
+          type: string
+          description: Pokemon game generation
+          enum:
+            - RED
+            - BLUE
+            - YELLOW
+            - GOLD
+            - SILVER
+            - CRYSTAL
+            - RUBY
+            - SAPPHIRE
+            - EMERALD
+            - FIRERED
+            - LEAFGREEN
+            - DIAMOND
+            - PEARL
+            - PLATINUM
+            - HEARTGOLD
+            - SOULSILVER
+            - BLACK
+            - WHITE
+          example: 'FIRERED'
+        pokemons:
+          type: array
+          description: List of the name of the pokemons that the trainer have
+          items:
+            type: string
+            example:
+              - "blastoise"
+              - "charizard"
+              - "venossaur"
+              - "pikachu"
+    response.pokemon_trainer:
+      type: object
+      required:
+        - id
+        - name
+        - gender
+        - birthdate
+        - game_version
+        - pokemons
+      properties:
+        id:
+          type: string
+          description: Id of the pokemon trainer. The id is and ULID
+          example: '01H48XJ5W02J4ZKBX31XT476E2'
+        name:
+          type: string
+          description: Name of the pokemon trainer
+          example: 'Ash Ketchum'
+        gender:
+          type: string
+          description: Gender of the pokemon trainer
+          enum:
+            - MALE
+            - FEMALE
+            - OTHERS
+          example: MALE
+        birthdate:
+          type: string
+          description: Birthdate of the pokemon trainer
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '1997-04-01'
+        game_version:
+          type: string
+          description: Pokemon game generation
+          enum:
+            - RED
+            - BLUE
+            - YELLOW
+            - GOLD
+            - SILVER
+            - CRYSTAL
+            - RUBY
+            - SAPPHIRE
+            - EMERALD
+            - FIRERED
+            - LEAFGREEN
+            - DIAMOND
+            - PEARL
+            - PLATINUM
+            - HEARTGOLD
+            - SOULSILVER
+            - BLACK
+            - WHITE
+          example: 'FIRERED'
+        pokemons:
+          type: array
+          description: List of the pokemons of a trainer
+          items:
+            $ref: '#/components/schemas/response.pokemon'
+    response.pokemon:
+      type: object
+      required:
+        - id
+        - name
+        - type
+        - pokedex_id
+        - base_experience
+      properties:
+        id:
+          type: string
+          description: Id of the pokemon. The id is and ULID
+          example: '01H48XJ5W02J4ZKBX31XT476E2'
+        name:
+          type: string
+          description: Name of the pokemon
+          example: 'blastoise'
+        type:
+          type: string
+          description: Primary type of the pokemon
+          example: 'fire'
+        pokedex_id:
+          type: integer
+          description: Id of the pokemon in pokedex in the specified game version
+          example: 9
+        base_experience:
+          type: integer
+          description: Base experience of the pokemon in the specified game version
+          example: 265
+    response.error:
+      type: object
+      required:
+        - code
+        - message
+        - detail
+      properties:
+        code:
+          type: string
+          description: Code of the error
+          example: '400 BAD_REQUEST'
+        message:
+          type: string
+          description: Message of the error
+        detail:
+          type: string
+          description: Detail of the error
+    response.list_errors:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          description: List of errors, mainly returned in invalid request body errors
+          items:
+            $ref: '#/components/schemas/response.error'
+
+  responses:
+    response.pokemon_trainer_created:
+      description: Pokemon trainer created with success
+      content:
+        application/json:
+          schema:
+              $ref: '#/components/schemas/response.pokemon_trainer'
+    response.error:
+      description: Response error from API
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/response.error'
+    response.errors:
+      description: List of errors from API
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/response.list_errors'
