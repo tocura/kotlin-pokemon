@@ -3,7 +3,7 @@
 This is a study of the Kotlin language using a SQL database
 and integrating with external APIs.
 
-The architecture was based in the hexagonal.
+The software was developed using the hexagonal architecture concepts.
 
 The API is very simple, it creates a pokemon trainer with it's
 pokemon team. There is an endpoint to find a trainer by id and
